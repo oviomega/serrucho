@@ -1,6 +1,8 @@
 #Divide archivos en fragmentos de un tamaño dado.
 #Permite unir los fragmentos de un archivo cortado
 
+use Time::HiRes qw(time);
+
 &menu;
 &dircomp;
 &arcomp;
@@ -38,8 +40,8 @@ if($opc == 1) {
 		$num++;
 		}
 	$tam = -s FENTRADA;
-	print "\n\n\n         Archivo procesado en $segst segundo(s)";
-	print "\n\n         Tama¤o original:        $tam         bytes";
+	printf ("\n\n\n         Archivo procesado en %.2f segundo(s)", $segst);
+	print "\n\n         Tamaño original:        $tam         bytes";
 	$tam = $tam / 1024;
 	printf ("\n                                 %.2f         KB", $tam);
 	$tam = $tam / 1024;
@@ -78,13 +80,13 @@ if($opc == 2) {
 	$tam = -s FSALIDA;
 	$segf = time();
 	$segst = $segf - $segi;
-	print "\n\n\n         Archivo procesado en $segst segundo(s)";
-	print "\n\n         Tama¤o final:           $tam         bytes";
+	printf ("\n\n\n         Archivo procesado en %.2f segundo(s)", $segst);
+	print "\n\n         Tamaño final:           $tam         bytes";
 	$tam = $tam / 1024;
 	printf ("\n                                 %.2f         KB", $tam);
 	$tam = $tam / 1024;
 	printf ("\n                                 %.2f            MB", $tam);
-	print "\n\n         Archivos leidos: $num\n";
+	print "\n\n         Archivos leídos: $num\n";
 	}
 close FSALIDA;
 close FENTRADA;
@@ -104,7 +106,7 @@ sub menu {
 while($opc<1 || $opc>2) {
 	system("cls");
 	print "SERRUCHO\n";
-	print "                                 ESCOGE OPCIàN";
+	print "                                 ESCOGE OPCIÓN";
 	print "\n                                 -------------";
 	print "\n\n1.- Cortar";
 	print "\n2.- Pegar\n\n";
