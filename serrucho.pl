@@ -161,7 +161,7 @@ sub trozos {
 if ($opc == 1) {
 	$sw=0;
 	while ($sw==0) {
-		print "\nTamaño en MB de cada fragmento (e para e-mail (25 MB), c para cd-rom de 700MB): ";
+		print "\nTamaño en MB de cada fragmento (e para e-mail (24,9 MiB), c para cd-rom de 700MB): ";
 		$tam = <STDIN>;
 		if($tam > 0 && $tam ne "c" && $tam ne "d") {
 			$tam = $tam * 1024 * 1024;
