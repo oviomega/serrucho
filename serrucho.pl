@@ -46,7 +46,7 @@ if($opc == 1) {
 	printf ("\n                                 %.2f         KB", $tam);
 	$tam = $tam / 1024;
 	printf ("\n                                 %.2f            MB", $tam);
-	print "\n\n         Archivos leidos: $num\n";
+	print "\n\n         Archivos leídos: $num\n";
 	}
 if($opc == 2) {
 	chop($salida);
@@ -161,12 +161,12 @@ sub trozos {
 if ($opc == 1) {
 	$sw=0;
 	while ($sw==0) {
-		print "\nTama¤o en MB de cada fragmento (d para disquete, c para cd-rom de 700MB): ";
+		print "\nTamaño en MB de cada fragmento (e para e-mail (25 MB), c para cd-rom de 700MB): ";
 		$tam = <STDIN>;
 		if($tam > 0 && $tam ne "c" && $tam ne "d") {
 			$tam = $tam * 1024 * 1024;
 			$trozo = $tam;
-			print "\nTama¤o del buffer en MB (intro para usar el buffer por defecto): ";
+			print "\nTamaño del buffer en MB (intro para usar el buffer por defecto): ";
 			$buflon = <STDIN>;
 			$buflon = $buflon * 1024 * 1024;
 			if ($buflon == "") {
@@ -179,9 +179,9 @@ if ($opc == 1) {
 			$sw=1;
 		} else {
 			chop($tam);
-			if((lc($tam)) eq "d") {
-				$tam = 1437034;
-				$buflon = 1437034;
+			if((lc($tam)) eq "e") {
+				$tam = 26109542;
+				$buflon = 26109542;
 				$sw=1;
 				}
 			if((lc($tam)) eq "c") {
