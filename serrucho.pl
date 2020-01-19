@@ -2,6 +2,7 @@
 #Permite unir los fragmentos de un archivo cortado
 
 use Time::HiRes qw(time);
+use Digest::MD5 qw(md5 md5_hex md5_base64);;
 
 &menu;
 &dircomp;
