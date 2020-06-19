@@ -39,12 +39,12 @@ if($opc == 1) {
   }
   $tam = -s FENTRADA;
   print "\n\n\n         Archivo procesado en $segst segundo(s)";
-  print "\n\n         Tama¤o original:        $tam         bytes";
+  print "\n\n         Tamaño original:        $tam         bytes";
   $tam = $tam / 1024;
   printf ("\n                                 %.2f         KB", $tam);
   $tam = $tam / 1024;
   printf ("\n                                 %.2f            MB", $tam);
-  print "\n\n         Archivos leidos: $num\n";
+  print "\n\n         Archivos leídos: $num\n";
 }
 if($opc == 2) {
   chop($salida);
@@ -78,7 +78,7 @@ if($opc == 2) {
   $segf = time();
   $segst = $segf - $segi;
   print "\n\n\n         Archivo procesado en $segst segundo(s)";
-  print "\n\n         Tama¤o final:           $tam         bytes";
+  print "\n\n         Tamaño final:           $tam         bytes";
   $tam = $tam / 1024;
   printf ("\n                                 %.2f         KB", $tam);
   $tam = $tam / 1024;
@@ -101,7 +101,7 @@ sub menu {
   while($opc<1 || $opc>2) {
     system("cls");
     print "SERRUCHO\n";
-    print "                                 ESCOGE OPCIàN";
+    print "                                 ESCOGE OPCIÓN";
     print "\n                                 -------------";
     print "\n\n1.- Cortar";
     print "\n2.- Pegar\n\n";
@@ -159,12 +159,12 @@ sub trozos {
   if ($opc == 1) {
     $sw=0;
     while ($sw==0) {
-      print "\nTama¤o en MB de cada fragmento (d para disquete, c para cd-rom de 700MB): ";
+      print "\nTamaño en MB de cada fragmento (d para disquete, c para cd-rom de 700MB): ";
       $tam = <STDIN>;
       if($tam > 0 && $tam ne "c" && $tam ne "d") {
         $tam = $tam * 1024 * 1024;
         $trozo = $tam;
-        print "\nTama¤o del buffer en MB (intro para usar el buffer por defecto): ";
+        print "\nTamaño del buffer en MB (intro para usar el buffer por defecto): ";
         $buflon = <STDIN>;
         $buflon = $buflon * 1024 * 1024;
         if ($buflon == "") {
