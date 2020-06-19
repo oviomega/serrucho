@@ -82,9 +82,7 @@ if($opc == 2) {
   $tam = $tam / 1024;
   printf ("\n                                 %.2f         KB", $tam);
   $tam = $tam / 1024;
-  printf ("\n                                 %.2f            MB", $tam);
-  print "\n\n         Archivos leidos: $num\n";
-}
+  printf ("\n                                 %.2f            MB", $tam);}
 close FSALIDA;
 close FENTRADA;
 print "\n\nPulsa intro para salir";
