@@ -6,22 +6,24 @@
 
 #Sustituir variables $entrada y $salida por $nombrearchivo o similar
 
-# use warnings;
+use warnings;
 use Fcntl 'SEEK_CUR';  #Requerido para sysseek (en systell)
 
-#MENU:
+#MENU // Main function:
 my $opc=0;
 while($opc!=1 && $opc!=2) {
   system("clear");
-  print "SERRUCHO\n";
-  print "                                 ESCOGE OPCIÓN\n";
-  print "                                 -------------\n\n";
-  print "1.- Cortar\n";
-  print "2.- Pegar\n\n";
-  $opc = <STDIN>;
+  print "Serrucho v0.2\n";
+  print "                       ESCOGE OPCIÓN\n";
+  print "                       -------------\n\n";
+  print "          1  --> Cortar\n";
+  print "          2  --> Pegar\n";
+  print "          !q --> Salir\n\nOpción: ";
+    $opc = <STDIN>;
+    chop($opc);
 
-  &dircomp;
-  &arcomp;
+    &dircomp;
+    &arcomp;
 
   if($opc == 1) {
     &trozos;
@@ -29,6 +31,9 @@ while($opc!=1 && $opc!=2) {
   }
   elsif($opc == 2) {
     &pega;
+  }
+  elsif($opc eq "!q") {
+    exit();
   }
 }
 
@@ -80,8 +85,6 @@ sub corta {
 
 #Opción 2: pegar
 sub pega {
-  # chop($salida);
-  # chop($salida);
   $salida = substr($salida, 0, -6);
   print "\nimprime la salida $salida";
   $entrada = $salida;
@@ -135,62 +138,70 @@ sub dircomp {
     system("clear");
     print "Ruta del fichero de entrada (intro para directorio actual): ";
     chop ($ruta = <STDIN>);
-      if(chdir($ruta) || $ruta eq "") {
-        $dir = 1;
-        print "\n         Ruta correcta\n\n\n";
+      if($ruta eq "") {
+        chop($ruta = `pwd`);
+        print "\n         Ruta correcta: $ruta";
         # chop ($ruta = `cd`);
+        # print `pwd`;
+        $dir = 1;
+      } elsif (chdir($ruta)) {
+          print "\n         Ruta correcta";
+          $dir = 1;
       } else {
-        print "         No se encuentra el directorio";
+        print "\n         No se encuentra el directorio, pulse intro";
         getc();
       }
   }
+  print "\n\nSe retornará $ruta";
+  return($ruta);
 }
 
-#Pide el archivo de entrada y omprueba su existencia:
+#Pide el archivo de entrada y comprueba su existencia:
 sub arcomp {
-  print "Nombre del fichero de entrada: ";
+  print "\n\nNombre del fichero de entrada: ";
   chop ($entrada = <STDIN>);
   $salida=$entrada;
-  $sw=0;
+  my $sw=0;
   if (!(open (FENTRADA, "$entrada"))) {
     while ($sw == 0) {
-      # system ("clear");
-      print "Archivo no encontrado en la ruta $rutacomp\n";
-      print "Nuevo nombre del fichero de entrada (*q para salir): ";
+      system ("clear");
+      print "Archivo no encontrado en la ruta $rutacomp\n"; #rutacomp Debugging
+      print "Nuevo nombre del fichero de entrada (!q para salir): ";
       chop ($entrada = <STDIN>);
       if (open (FENTRADA, "$entrada")) {
         $salida = $entrada;
         $sw = 1;
         $rutacomp = "$ruta\\$salida";
+        print "Imprime ruta completa 1: $rutacomp\n"; #Debugging
         $rutacomp =~ s/\\\\/\\/g;
-        print "$rutacomp";
-      } else {
-        if ($entrada eq "*q") {
+        print "Imprime ruta completa 2: $rutacomp"; #Debugging
+      } elsif ($entrada eq "!q") {
           exit();
-        }
       }
     }
   }
 }
+
 
 #Determina el tamaño de cada archivo y el buffer de lectura/escritura
 sub trozos {
   my $sw=0;
   while ($sw==0) {
     print "\nTamaño en MB de cada fragmento (d para disquete, c para cd-rom de 700MB): ";
-    $tam = <STDIN>;
+    chop($tam = <STDIN>);
     if($tam > 0 && $tam ne "c" && $tam ne "d") {
       $tam = $tam * 1024 * 1024;
       $trozo = $tam;
       print "\nTamaño del buffer en MB (intro para usar el buffer por defecto): ";
-      $buflon = <STDIN>;
-      $buflon = $buflon * 1024 * 1024;
-      if ($buflon == "") {
+      chop($buflon = <STDIN>);
+      if ($buflon eq "") {
         if ($buflon >= $tam || $tam <= 16777216) {
           $buflon = $tam;
         } else {
           $buflon = 524288;
         }
+      } else {
+        $buflon = $buflon * 1024 * 1024;
       }
       $sw=1;
     } else {
