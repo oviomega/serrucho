@@ -11,6 +11,7 @@ use Fcntl 'SEEK_CUR';  #Requerido para sysseek (en systell)
 
 #MENU // Main function:
 my $opc=0;
+my $ruta="";
 while($opc!=1 && $opc!=2) {
   system("clear");
   print "Serrucho v0.2\n";
@@ -22,8 +23,8 @@ while($opc!=1 && $opc!=2) {
     $opc = <STDIN>;
     chop($opc);
 
-    &dircomp;
-    &arcomp;
+  $ruta = &arcomp(&dircomp);
+  print "\n RUTA GENERADA: $ruta";
 
   if($opc == 1) {
     &trozos;
@@ -158,14 +159,16 @@ sub dircomp {
 
 #Pide el archivo de entrada y comprueba su existencia:
 sub arcomp {
+  my $ruta = shift(@_);
+  my $sw=0;
+  my $entrada, $salida, $rutacomp;
   print "\n\nNombre del fichero de entrada: ";
   chop ($entrada = <STDIN>);
   $salida=$entrada;
-  my $sw=0;
   if (!(open (FENTRADA, "$entrada"))) {
     while ($sw == 0) {
       system ("clear");
-      print "Archivo no encontrado en la ruta $rutacomp\n"; #rutacomp Debugging
+      print "Archivo no encontrado en la ruta\n";
       print "Nuevo nombre del fichero de entrada (!q para salir): ";
       chop ($entrada = <STDIN>);
       if (open (FENTRADA, "$entrada")) {
